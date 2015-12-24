@@ -1,6 +1,7 @@
 require "bowling/version"
 require "bowling/game"
-require "bowling/player"
+require "bowling/players"
+require "bowling/frames"
 
 module Bowling
   def self.start(*player_names)
