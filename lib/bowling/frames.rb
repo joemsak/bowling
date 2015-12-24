@@ -4,8 +4,11 @@ module Bowling
   class Frames
     include Enumerable
 
+    attr_reader :current_frame_number
+
     def initialize(players)
       @frames = []
+      @current_frame_number = 1
 
       players.each do |player|
         10.times { |n| @frames << Frame.new(n + 1, player) }
@@ -14,6 +17,12 @@ module Bowling
 
     def each(&block)
       @frames.each(&block)
+    end
+
+    def record_chance(player, pins)
+      frame = find(current_frame_number, player.name)
+      frame.record_chance(pins)
+      @current_frame_number += 1 if frame.complete?
     end
 
     def find(num, player_name)

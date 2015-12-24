@@ -1,22 +1,17 @@
 module Bowling
   class Game
-    attr_reader :players, :frames, :current_frame
+    attr_reader :players, :frames
 
     def initialize(names)
       names = [names].flatten
       @started = names.any?
       @players = Players.new(names)
       @frames = Frames.new(players)
-      @current_frame = 1
     end
 
     def roll(player)
       pins = rand(11)
-      frame = frame(current_frame, player.name)
-
-      frame.record_chance(pins)
-      @current_frame += 1 if frame.complete?
-
+      frames.record_chance(player, pins)
       pins
     end
 
