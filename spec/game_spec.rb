@@ -1,8 +1,8 @@
 require 'spec_helper'
 
 RSpec.describe Bowling::Game do
-	let(:game) { Bowling::Game.new('Joe') }
-	let(:player) { game.players.last }
+  let(:game) { Bowling::Game.new('Joe') }
+  let(:player) { game.players.last }
 
   it 'scores the first roll' do
     roll = game.roll(player)
@@ -28,6 +28,6 @@ RSpec.describe Bowling::Game do
     allow(game).to receive(:rand).with(11) { 8 }
     game.roll(player)
     frame = game.frame(2, 'Joe')
-		expect(frame.chances).to eq([8])
+    expect(frame.chances).to eq([8])
   end
 end
