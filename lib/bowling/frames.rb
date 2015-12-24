@@ -20,13 +20,13 @@ module Bowling
     end
 
     def record_chance(player, pins)
-      frame = find(current_frame_number, player.name)
+      frame = find(current_frame_number, player)
       frame.record_chance(pins)
       @current_frame_number += 1 if frame.complete?
     end
 
-    def find(num, player_name)
-      @frames.select { |f| f.number == num && f.player.name == player_name }.first
+    def find(num, player)
+      @frames.select { |f| f.number == num && f.player.name == player.name }.first
     end
 
     def method_missing(method_name, *args, &block)

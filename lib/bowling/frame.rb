@@ -13,7 +13,12 @@ module Bowling
     end
 
     def complete?
-      score == 10 || chances.size == 2
+      case number
+      when 10
+        (chances.size == 2 && score < 10) || chances.size == 3
+      else
+        score == 10 || chances.size == 2
+      end
     end
 
     def score

@@ -15,8 +15,8 @@ module Bowling
       pins
     end
 
-    def frame(num, player_name)
-      frames.find(num, player_name)
+    def frame(num, player)
+      frames.find(num, player)
     end
 
     def started?

@@ -6,7 +6,7 @@ RSpec.describe Bowling::Game do
 
   it 'scores the first roll' do
     roll = game.roll(player)
-    frame = game.frame(1, 'Joe')
+    frame = game.frame(1, player)
     expect(frame.chances.first).to eq(roll)
   end
 
@@ -17,7 +17,7 @@ RSpec.describe Bowling::Game do
     allow(game).to receive(:rand).with(11) { 0 }
     game.roll(player)
 
-    frame = game.frame(1, 'Joe')
+    frame = game.frame(1, player)
     expect(frame.chances).to eq([9, 0])
   end
 
@@ -27,7 +27,44 @@ RSpec.describe Bowling::Game do
 
     allow(game).to receive(:rand).with(11) { 8 }
     game.roll(player)
-    frame = game.frame(2, 'Joe')
+    frame = game.frame(2, player)
     expect(frame.chances).to eq([8])
+  end
+
+  it 'scores a boring 10th frame' do
+    9.times do
+      allow(game).to receive(:rand).with(11) { 10 }
+      game.roll(player)
+    end
+
+    allow(game).to receive(:rand).with(11) { 5 }
+    game.roll(player)
+
+    allow(game).to receive(:rand).with(11) { 4 }
+    game.roll(player)
+
+    frame = game.frame(10, player)
+    expect(frame).to be_complete
+    expect(frame.score).to eq(9)
+  end
+
+  it 'scores a spared 10th frame' do
+    9.times do
+      allow(game).to receive(:rand).with(11) { 10 }
+      game.roll(player)
+    end
+
+    allow(game).to receive(:rand).with(11) { 5 }
+    game.roll(player)
+
+    allow(game).to receive(:rand).with(11) { 5 }
+    game.roll(player)
+
+    allow(game).to receive(:rand).with(11) { 5 }
+    game.roll(player)
+
+    frame = game.frame(10, player)
+    expect(frame).to be_complete
+    expect(frame.score).to eq(15)
   end
 end
